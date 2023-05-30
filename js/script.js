@@ -21,8 +21,7 @@ fetch('products.json')
       button.addEventListener('click', addToCart);
     });
 
-    function addToCart(event) {
-      const productId = event.target.dataset.productId;
+    function addToCart({ target { dataset: { productId }}}) {
       // Handle product to cart
       console.log('Product added to cart:', productId);
     }
