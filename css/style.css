@@ -1,0 +1,16 @@
+
+.container {
+    display: flex;
+  }
+  
+  .product-list {
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  .cart {
+    flex-basis: 300px;
+    padding: 20px;
+    background-color: #f2f2f2;
+  }
+  
