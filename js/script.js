@@ -1,4 +1,8 @@
-const cart = [];
+let cart = [];
+
+if (localStorage.getItem('CART_ITEMS')) {
+  cart = JSON.parse(localStorage.getItem('CART_ITEMS'));
+}
 
 function updateCartTotal() {
   const cartTotalContainer = document.getElementById('cart-total');
@@ -17,20 +21,38 @@ function displayCartItems() {
   });
 }
 
+function saveCartToLocalStorage() {
+  localStorage.setItem('CART_ITEMS', JSON.stringify(cart));
+}
+
+function clearCart() {
+  cart = [];
+  saveCartToLocalStorage();
+
+  updateCartTotal();
+  displayCartItems();
+}
+
+function addClearCartListener() {
+  const clearCartButton = document.getElementById('clear-cart');
+  clearCartButton.addEventListener('click', () => clearCart());
+}
+
 function addToCart({ target: { dataset: { productId } } }, products) {
   const selectedProduct = products.find((product) => product.id === Number(productId));
   const existingCartItem = cart.find((item) => item.id === Number(productId));
   
   if (existingCartItem) {
     existingCartItem.quantity += 1;
-  } else {
-    cart.push({
+  } else { 
+   cart.push({
       id: selectedProduct.id,
       name: selectedProduct.name,
       price: selectedProduct.price,
       quantity: 1,
     });
   }
+  window.localStorage.setItem('CART_ITEMS', JSON.stringify(cart));
   
   displayCartItems();
   updateCartTotal();
@@ -48,18 +70,42 @@ function displayProductList(productListHTML) {
   productListContainer.innerHTML = productListHTML;
 }
 
-function generateProductListHTML(products) {
-  let productListHTML = '';
-  
-  products.forEach((product) => {
-    productListHTML += `
-    <div class="product">
-    <span>${product.name} - $${product.price}</span>
+function renderProductImage(product) {
+  return `
+    <img 
+      class="card-image" 
+      src=${product.image} 
+      alt="Avatar" 
+      style="max-width:200px;max-height:200px;"
+    >
+  `;
+}
+
+function renderProductData(product) {
+  return `
+   <h3 class="product-name">${product.name}</h3>
+    <p class="product-price">$${product.price}</p>
     <button class="add-to-cart" data-product-id="${product.id}">Add to Cart</button>
+  `;
+}
+
+function renderCard(product) {
+  return `
+  <div class="flip-card">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        ${renderProductImage(product)}
+      </div>
+      <div class="flip-card-back">
+        ${renderProductData(product)}
+      </div>
     </div>
-    `;
-  });
-  return productListHTML;
+  </div> 
+  `;
+}
+
+function generateProductListHTML(products) {
+  return products.reduce((productListHTML, product) => productListHTML + renderCard(product), '');
 }
 
 async function fetchProducts() {
@@ -78,6 +124,10 @@ async function fetchAndDisplayProducts() {
   const productListHTML = generateProductListHTML(products);
   displayProductList(productListHTML);
   addAddToCartListeners(products);
+  addClearCartListener();
+  saveCartToLocalStorage();
+  updateCartTotal();
+  displayCartItems();
 }
 
 fetchAndDisplayProducts();
