@@ -53,7 +53,7 @@ function generateProductListHTML(products) {
   
   products.forEach((product) => {
     productListHTML += `
-    <div>
+    <div class="product">
     <span>${product.name} - $${product.price}</span>
     <button class="add-to-cart" data-product-id="${product.id}">Add to Cart</button>
     </div>
