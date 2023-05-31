@@ -1,18 +1,21 @@
 {
 	"products": [{
 			"id": 1,
-			"name": "Product 1",
-			"price": 10.99
+			"name": "VIM Vibrating wand",
+			"price": 149.90,
+			"image": "https://cdn.shopify.com/s/files/1/0256/6917/3332/products/VIM_SunriseOrange-Listbild.png?v=1677493637"
 		},
 		{
 			"id": 2,
-			"name": "Product 2",
-			"price": 19.99
+			"name": "Bootie Ring",
+			"price": 34.90,
+			"image": "https://cdn.shopify.com/s/files/1/0256/6917/3332/products/BOOTIERING-II_Listbild_161ce440-7291-4a6c-ae6d-bd41b53850e0.png?v=1676021542"
 		},
 		{
 			"id": 3,
-			"name": "Product 3",
-			"price": 7.99
+			"name": "Stronic G",
+			"price": 119.90,
+			"image": "https://cdn.shopify.com/s/files/1/0256/6917/3332/products/STRONIC-G-G-Spot-Pulsator-Pink-Product-1.png?v=1675420979"
 		}
 	]
 }
